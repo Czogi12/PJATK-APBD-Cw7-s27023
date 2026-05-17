@@ -2,8 +2,8 @@
 
 public class Component
 {
-    public string Code { get; set; }
-    public string Name { get; set; }
+    public string Code { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public string Description { get; set; }
     public int ComponentManufacturersId { get; set; }
     public int ComponentTypesId { get; set; }
