@@ -15,7 +15,7 @@ public class PcsController(IPcService pcService) : ControllerBase
         return Ok(pcs);
     }
     
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:int}/components")]
     public async Task<IActionResult> GetComponentsById([FromRoute] int id, CancellationToken token)
     {
         var pc = await pcService.GetAllComponents(id, token);
