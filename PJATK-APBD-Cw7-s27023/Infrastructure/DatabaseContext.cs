@@ -5,19 +5,53 @@ namespace PJATK_APBD_Cw7_s27023.Infrastructure;
 
 public class DatabaseContext(DbContextOptions opt) : DbContext(opt)
 {
-      protected override void OnModelCreating(ModelBuilder modelBuilder)
-      {
-            base.OnModelCreating(modelBuilder);
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ComponentType>(opt =>
-            {
-                  opt.ToTable("ComponentTypes");
-                  
-                  opt.HasKey(ci => ci.Id);
-                  
-                  opt.Property(ci => ci.Abbreviation).HasColumnType("nvarchar").HasMaxLength(30);
-                  opt.Property(ci => ci.Name).HasColumnType("nvarchar").HasMaxLength(150);
-            });
-      }
+        modelBuilder.Entity<ComponentType>(opt =>
+        {
+            opt.ToTable("ComponentTypes");
 
+            opt.Property(ct => ct.Abbreviation).HasColumnType("nvarchar").HasMaxLength(30);
+            opt.Property(ct => ct.Name).HasColumnType("nvarchar").HasMaxLength(150);
+        });
+
+        modelBuilder.Entity<Component>(opt =>
+        {
+            opt.ToTable("Components");
+
+            opt.HasKey(c => c.Code);
+
+            opt.Property(c => c.Code).HasColumnType("char").HasMaxLength(10);
+            opt.Property(c => c.Name).HasColumnType("nvarchar").HasMaxLength(300);
+        });
+
+        modelBuilder.Entity<ComponentManufacturer>(opt =>
+        {
+            opt.ToTable("ComponentManufacturers");
+
+            opt.Property(cm => cm.Abbreviation).HasColumnType("nvarchar").HasMaxLength(30);
+            opt.Property(cm => cm.FullName).HasColumnType("nvarchar").HasMaxLength(300);
+            opt.Property(cm => cm.FoundationDate).HasColumnType("date");
+        });
+
+        modelBuilder.Entity<PCComponent>(opt =>
+        {
+            opt.ToTable("PCComponents");
+
+            opt.HasKey(pcc => new { pcc.PCId, pcc.ComponentCode });
+
+            opt.Property(pcc => pcc.ComponentCode).HasColumnType("char").HasMaxLength(10);
+        });
+
+        modelBuilder.Entity<PC>(opt =>
+        {
+            opt.ToTable("PCs");
+            
+            opt.Property(pc => pc.Name).HasColumnType("nvarchar").HasMaxLength(50);
+            opt.Property(pc => pc.Weight).HasColumnType("float(5)");
+            opt.Property(pc => pc.CreatedAt).HasColumnType("datetime");
+        });
+    }
 }
