@@ -1,0 +1,6 @@
+@PJATK_APBD_Cw7_s27023_HostAddress = http://localhost:5009
+
+GET {{PJATK_APBD_Cw7_s27023_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
