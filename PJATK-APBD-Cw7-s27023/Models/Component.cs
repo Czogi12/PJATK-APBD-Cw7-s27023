@@ -7,4 +7,7 @@ public class Component
     public string Description { get; set; }
     public int ComponentManufacturersId { get; set; }
     public int ComponentTypesId { get; set; }
+    public ICollection<PCComponent> PCComponents { get; set; } = [];
+    public ComponentManufacturer ComponentManufacturer { get; set; } = null!;
+    public ComponentType ComponentType { get; set; } = null!;
 }

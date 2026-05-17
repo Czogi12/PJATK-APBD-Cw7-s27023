@@ -25,6 +25,9 @@ public class DatabaseContext(DbContextOptions opt) : DbContext(opt)
 
             opt.Property(c => c.Code).HasColumnType("char").HasMaxLength(10);
             opt.Property(c => c.Name).HasColumnType("nvarchar").HasMaxLength(300);
+            
+            opt.HasOne(c => c.ComponentType).WithMany(c => c.Components).HasForeignKey(c => c.ComponentTypesId);
+            opt.HasOne(c => c.ComponentManufacturer).WithMany(c => c.Components).HasForeignKey(c => c.ComponentManufacturersId);
         });
 
         modelBuilder.Entity<ComponentManufacturer>(opt =>
@@ -43,6 +46,9 @@ public class DatabaseContext(DbContextOptions opt) : DbContext(opt)
             opt.HasKey(pcc => new { pcc.PCId, pcc.ComponentCode });
 
             opt.Property(pcc => pcc.ComponentCode).HasColumnType("char").HasMaxLength(10);
+            
+            opt.HasOne(pcc => pcc.Component).WithMany(c => c.PCComponents).HasForeignKey(pcc => pcc.ComponentCode);
+            opt.HasOne(pcc => pcc.Pc).WithMany(pc => pc.PCComponents).HasForeignKey(pcc => pcc.PCId);
         });
 
         modelBuilder.Entity<PC>(opt =>
