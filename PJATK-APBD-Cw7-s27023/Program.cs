@@ -21,9 +21,11 @@ public class Program
         builder.Services.AddDbContext<DatabaseContext>(opt =>
             opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
         );
+        
+        builder.Services.AddControllers();
 
         var app = builder.Build();
-
+        
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -34,6 +36,8 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+        
+        app.MapControllers();
         
         app.Run();
     }
